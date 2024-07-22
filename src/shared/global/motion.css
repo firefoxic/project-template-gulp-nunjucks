@@ -1,0 +1,8 @@
+:root {
+	scroll-behavior: smooth;
+
+	@media (prefers-reduced-motion: reduce) {
+		--motion-duration: 0ms;
+		scroll-behavior: auto;
+	}
+}

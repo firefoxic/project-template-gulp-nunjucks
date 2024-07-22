@@ -1,0 +1,6 @@
+:root {
+	--Icon_shape_burger: url("./burger.svg");
+	--Icon_shape_cross: url("./cross.svg");
+	--Icon_shape_moon: url("./moon.svg");
+	--Icon_shape_sun: url("./sun.svg");
+}

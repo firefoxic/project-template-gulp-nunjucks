@@ -1,0 +1,64 @@
+{
+	"name": "project-template-gulp-nunjucks",
+	"description": "Project template based on Gulp and Nunjucks.",
+	"private": true,
+	"version": "0.0.1",
+	"license": "MIT",
+	"author": {
+		"name": "Sergey Artemov",
+		"email": "firefoxic.dev@gmail.com"
+	},
+	"homepage": "https://github.com/firefoxic/project-template-gulp-nunjucks#readme",
+	"bugs": {
+		"url": "https://github.com/firefoxic/project-template-gulp-nunjucks/issues"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/firefoxic/project-template-gulp-nunjucks.git"
+	},
+	"type": "module",
+	"engines": {
+		"node": ">=20.15"
+	},
+	"packageManager": "pnpm@9.5.0",
+	"dependencies": {
+		"@fontsource-variable/roboto-flex": "^5.0.15",
+		"@fontsource-variable/roboto-mono": "^5.0.19"
+	},
+	"scripts": {
+		"prepare": "husky",
+		"start": "gulp",
+		"build": "NODE_ENV=production gulp",
+		"preview": "pnpm build && browser-sync start -s dist/ --cors --no-notify --no-ui",
+		"version": "update-changelog && git add CHANGELOG.md",
+		"lint": "pnpm --color /^lint:/",
+		"lint:styles": "stylelint src/**/*.css",
+		"lint:scripts": "eslint",
+		"optimize": "conjure all -r -m",
+		"optimize:icons": "conjure icons",
+		"optimize:images": "conjure images -r -m",
+		"optimize:favicons": "conjure favicons"
+	},
+	"devDependencies": {
+		"@firefoxic/conjure": "^2.0.0",
+		"@firefoxic/eslint-config": "^2.0.0",
+		"@firefoxic/stylelint-config": "^3.0.0",
+		"@firefoxic/update-changelog": "^0.1.0",
+		"@firefoxic/utils": "^0.4.0",
+		"browser-sync": "^3.0.2",
+		"browserslist-to-esbuild": "^2.1.1",
+		"eslint": "^9.7.0",
+		"gulp": "^5.0.0",
+		"gulp-esbuild": "^0.12.1",
+		"gulp-htmlmin": "^5.0.1",
+		"gulp-nunjucks": "^6.0.0",
+		"gulp-plumber": "^1.2.1",
+		"gulp-postcss": "^10.0.0",
+		"husky": "^9.1.1",
+		"postcss": "^8.4.39",
+		"postcss-import": "^16.1.0",
+		"postcss-lightningcss": "^1.0.0",
+		"postcss-url": "^10.1.3",
+		"stylelint": "^16.7.0"
+	}
+}

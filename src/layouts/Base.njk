@@ -1,0 +1,49 @@
+{%- from "../components/Header/index.njk" import Header with context -%}
+{%- from "../components/Footer/index.njk" import Footer with context -%}
+{%- from "../components/Logo/index.njk" import Logo with context -%}
+{%- from "../components/Navigation/index.njk" import Navigation with context -%}
+{%- from "../components/Copyright/index.njk" import Copyright with context -%}
+{%- from "../shared/fonts/index.njk" import fonts with context -%}
+{%- from "../styles/index.njk" import styles with context -%}
+{%- from "../scripts/index.njk" import scripts with context -%}
+
+<!DOCTYPE html>
+<html lang="{{ page.lang or "en" }}">
+
+	<head>
+		<meta charset="UTF-8">
+		<title>{{ page.title }} — {{ project.name }}</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1">
+		<meta name="color-scheme" content="light dark">
+		{{ fonts() }}
+		{{ styles() }}
+		<link rel="icon" href="{{ project.root }}/favicon.ico" sizes="32x32">
+		<link rel="icon" href="{{ project.root }}/favicons/icon.svg" type="image/svg+xml">
+		<link rel="apple-touch-icon" href="{{ project.root }}/favicons/icon-180.png">
+		<link rel="manifest" href="{{ project.root }}/manifest.webmanifest">
+		{{ scripts() }}
+	</head>
+
+	<body class="Page">
+
+		{% call Header("Page-Header") %}
+		<div class="Page-Centerer Header-Container">
+			{{ Logo("Header-Logo") }}
+			{{ Navigation("Header-Navigation") }}
+		</div>
+		{% endcall %}
+
+		<main class="Page-Content">
+			{% block Content %}{% endblock %}
+		</main>
+
+		{% call Footer("Page-Footer") %}
+		<div class="Page-Centerer Footer-Container">
+			{{ Logo("Footer-Logo") }}
+			{{ Copyright("Footer-Copyright") }}
+		</div>
+		{% endcall %}
+
+	</body>
+
+</html>

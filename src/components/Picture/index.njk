@@ -1,0 +1,62 @@
+{% macro Picture(name, attributes) -%}
+
+	{% set directory = project.root ~ "/shared/images/" -%}
+	{% set sizes = images[name].sizes -%}
+	{% set formats = images[name].formats -%}
+	{% set maxDensity = images[name].maxDensity -%}
+	{% set densities = range(1, (maxDensity or 1) + 1) | reverse -%}
+
+	{{- "\n\t" -}}
+	<picture>
+		{%- for format in formats %}
+			{%- set lastFormat = loop.last %}
+
+			{%- for size in sizes %}
+				{%- set isImgTag = lastFormat and loop.last %}
+				{%- set suffix = ("-" ~ size.breakpoint) if size.breakpoint else "" %}
+				{%- set path = "" %}
+				{%- set srcset %}
+					{%- set comma = joiner(", ") %}
+
+					{%- for density in densities %}
+						{%- set descriptor = (" " ~ density ~ "x") if density !== 1 else "" %}
+						{%- set path = directory ~ name ~ suffix ~ "@" ~ density ~ "x." ~ format %}
+						{%- if not isImgTag or not loop.last -%}
+							{{ comma() }}{{ path }}{{ descriptor }}
+						{%- endif -%}
+					{%- endfor -%}
+				{%- endset %}
+
+				{{- "\n\t\t" -}}
+
+				<{{ "img" if isImgTag else "source" }}
+					{% if srcset %}
+						srcset="{{ srcset }}"
+					{% endif %}
+					{% if isImgTag %}
+						src="{{ path }}"
+					{% endif %}
+					width="{{ size.width }}"
+					height="{{ size.height }}"
+					{% if isImgTag %}
+						{% for name, value in attributes %}
+							{% if value === true %}
+								{{ name }}
+							{% elseif value !== false %}
+								{{ name }}="{{ value }}"
+							{% endif %}
+						{% endfor %}
+						{% if not attributes.alt %}
+							alt="{{ alt }}"
+						{% endif %}
+					{% else %}
+						type="image/{{ format }}"
+						{% if size.breakpoint -%}
+							media="(width >= {{ size.breakpoint }}px)"
+						{%- endif %}
+					{% endif %}
+				>
+			{%- endfor -%}
+		{%- endfor %}
+	</picture>
+{%- endmacro %}

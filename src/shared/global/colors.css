@@ -1,0 +1,50 @@
+@property --ColorPalette-White {
+	syntax: "<color>";
+	inherits: true;
+	initial-value: oklch(100% 0 0);
+}
+
+@property --ColorPalette-Black {
+	syntax: "<color>";
+	inherits: true;
+	initial-value: oklch(0% 0 0);
+}
+
+@property --ColorPalette-Yellow {
+	syntax: "<color>";
+	inherits: true;
+	initial-value: oklch(86% 0.17 90);
+}
+
+@property --ColorPalette-Cyan {
+	syntax: "<color>";
+	inherits: true;
+	initial-value: oklch(86% 0.17 170);
+}
+
+@property --ColorPalette-Gray_light {
+	syntax: "<color>";
+	inherits: true;
+	initial-value: oklch(100% 0 0);
+}
+
+@property --ColorPalette-Gray_dark {
+	syntax: "<color>";
+	inherits: true;
+	initial-value: oklch(0% 0 0);
+}
+
+:root {
+	--ColorPalette-Gray_light: oklab(from var(--ColorPalette-White) calc(l * 0.95) a b);
+	--ColorPalette-Gray_dark: oklab(from var(--ColorPalette-White) calc(l * 0.25) a b);
+
+	--ColorUI-BG_page: light-dark(var(--ColorPalette-White), var(--ColorPalette-Gray_dark));
+	--ColorUI-BG_special: light-dark(var(--ColorPalette-Gray_light), var(--ColorPalette-Black));
+	--ColorUI-Text: light-dark(var(--ColorPalette-Gray_dark), var(--ColorPalette-Gray_light));
+	--ColorUI-Accent: light-dark(var(--ColorPalette-Cyan), var(--ColorPalette-Yellow));
+
+	background-color: var(--ColorUI-BG_page);
+	color: var(--ColorUI-Text);
+	accent-color: var(--ColorUI-Accent);
+	color-scheme: light dark;
+}

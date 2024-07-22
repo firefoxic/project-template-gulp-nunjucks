@@ -1,0 +1,18 @@
+{% extends "./layouts/Base.njk" %}
+
+{% from "./components/Picture/index.njk" import Picture with context %}
+
+{% set page = {
+	title: "Main page",
+	link: project.root ~ "/"
+} %}
+
+{% block Content %}
+	<div class="Page-Centerer">
+		<h1 class="Heading Heading_size_huge">{{ page.title }}</h1>
+
+		<p>
+		{{ Picture("eclipse", { class: "Image", loading: "lazy", alt: "Eclipse" }) }}
+		</p>
+	</div>
+{% endblock Content %}

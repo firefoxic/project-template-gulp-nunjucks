@@ -1,0 +1,13 @@
+.Footer {
+	background: var(--ColorUI-BG_special);
+
+	@media (--not-small) {
+		box-sizing: border-box;
+	}
+}
+
+.Footer-Container {
+	display: block flex;
+	justify-content: space-between;
+	align-items: center;
+}

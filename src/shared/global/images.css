@@ -1,0 +1,14 @@
+img {
+	display: block flow-root;
+	max-inline-size: 100%;
+	block-size: auto;
+	object-fit: scale-down;
+
+	&[src*=".svg" i] {
+		object-fit: cover;
+	}
+}
+
+:is(picture, source) {
+	display: contents;
+}

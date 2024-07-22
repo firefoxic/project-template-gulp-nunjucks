@@ -1,0 +1,25 @@
+name: Test
+
+on:
+  pull_request:
+    branches:
+      - '*'
+
+env:
+  FORCE_COLOR: true
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: 'package.json'
+          cache: pnpm
+      - run: pnpm install
+      - run: pnpm lint
+      - run: pnpm exec gulp processMarkup
+      - run: pnpm add -D w3c-html-validator
+      - run: pnpm exec html-validator dist/**/*.html

@@ -1,0 +1,25 @@
+{%- macro Navigation(classes) -%}
+	{% set blockClassName = "Navigation" %}
+	<nav class="{{ classes }} {{ blockClassName }}" aria-label="Main navigation">
+		<button
+			class="{{ blockClassName }}-Button Button"
+			type="button"
+			aria-controls="Navigation-List"
+			hidden
+		>
+			<span class="{{ blockClassName }}-ButtonText">Toggle navigation list</span>
+		</button>
+
+		<ul class="{{ blockClassName }}-List " id="Navigation-List">
+			{% for link in navLinks %}
+				<li class="{{ blockClassName }}-Item">
+					<a
+						class="{{ blockClassName }}-Link"
+						href="{{ project.root ~ link.rootUrl }}"
+						{{ "aria-current=page" if link.rootUrl === page.link -}}
+					>{{ link.text }}</a>
+				</li>
+			{% endfor %}
+		</ul>
+	</nav>
+{%- endmacro -%}

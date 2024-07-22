@@ -1,0 +1,5 @@
+{%- macro Header(classes) -%}
+	<header class="{{ classes }} Header">
+		{{ caller() }}
+	</header>
+{%- endmacro -%}

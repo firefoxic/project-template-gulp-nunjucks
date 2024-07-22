@@ -1,0 +1,23 @@
+@import "../../../node_modules/@fontsource-variable/roboto-flex/wght.css";
+@import "../../../node_modules/@fontsource-variable/roboto-mono/wght.css";
+@import "../../../node_modules/@fontsource-variable/roboto-mono/wght-italic.css";
+
+:root {
+	--FontMain-Family: roboto flex variable, ui-sans-serif, sans-serif;
+	--FontMain-Ex: 0.513671875;
+	--FontMain-Cap: 0.7109375;
+	--FontMain-Ascent: 0.927734375;
+	--FontMain-Descent: 0.244140625;
+
+	--FontAccent-Family: var(--FontMain-Family);
+	--FontAccent-Ex: var(--FontMain-Ex);
+	--FontAccent-Cap: var(--FontMain-Cap);
+	--FontAccent-Ascent: var(--FontMain-Ascent);
+	--FontAccent-Descent: var(--FontMain-Descent);
+
+	--FontMono-Family: roboto mono variable, ui-monospace, monospace, monospace;
+	--FontMono-Ex: 0.5283203125;
+	--FontMono-Cap: 0.7109375;
+	--FontMono-Ascent: 1.0478515625;
+	--FontMono-Descent: 0.27099609375;
+}

@@ -1,0 +1,37 @@
+{
+	"maxDensity": 2,
+	"formats": [
+		"avif",
+		"webp"
+	],
+	"sizes": [
+		{
+			"width": 2048,
+			"height": 1152,
+			"breakpoint": 1280
+		},
+		{
+			"width": 1280,
+			"height": 848,
+			"breakpoint": 640
+		},
+		{
+			"width": 640,
+			"height": 518
+		}
+	],
+	"paths": [
+		"./aurora-1280@2x.avif",
+		"./aurora-1280@1x.avif",
+		"./aurora-1280@2x.webp",
+		"./aurora-1280@1x.webp",
+		"./aurora-640@2x.avif",
+		"./aurora-640@1x.avif",
+		"./aurora-640@2x.webp",
+		"./aurora-640@1x.webp",
+		"./aurora@2x.avif",
+		"./aurora@1x.avif",
+		"./aurora@2x.webp",
+		"./aurora@1x.webp"
+	]
+}

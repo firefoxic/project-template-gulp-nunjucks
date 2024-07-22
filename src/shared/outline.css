@@ -1,0 +1,112 @@
+@property --hue-offset {
+	syntax: "<angle>";
+	inherits: true;
+	initial-value: 1.5rad;
+}
+
+@property --hue-rotate {
+	syntax: "<angle>";
+	inherits: true;
+	initial-value: 1rad;
+}
+
+@property --hue-rotate-step {
+	syntax: "<integer>";
+	inherits: true;
+	initial-value: 0;
+}
+
+@property --outline-width {
+	syntax: "<length>";
+	inherits: false;
+	initial-value: 1px;
+}
+
+body {
+	* {
+		--outline-color: oklch(0.64 0.12 calc(var(--hue-offset) + var(--hue-rotate) * var(--hue-rotate-step)));
+		--class-indicator-size: 1.6;
+
+		transition: all 0.1s;
+		outline: var(--outline-width, 1px) solid var(--outline-color);
+		outline-offset: calc(-1 * var(--outline-width));
+
+		&:hover {
+			--class-name: attr(class); /* stylelint-disable-line */
+
+			&:not(:has(:hover)) {
+				--outline-width: 3px;
+
+				border-image: fill 0 linear-gradient(oklch(from var(--outline-color) l c h / 0.1) 0 100%);
+				box-shadow: 0 0 40px 8px oklch(from var(--outline-color) l c h / 0.5);
+			}
+
+			:not(:hover > &) { /* stylelint-disable-line */
+				--class-name: initial;
+			}
+		}
+
+		&::after {
+			content: var(--class-name);
+			position: fixed;
+			z-index: 100;
+			inset-inline-end: 0px;
+			inset-block-start: calc(1.1em * var(--class-indicator-size) * var(--hue-rotate-step));
+			padding-inline: 1em;
+			line-height: var(--class-indicator-size);
+			font-family: monospace, monospace;
+			font-size: 14px;
+			font-weight: 400;
+			white-space: pre;
+			text-transform: none;
+			color: oklch(100% 0 0);
+			background: var(--outline-color);
+			opacity: 0.9;
+		}
+	}
+
+	/* stylelint-disable */
+	> * {
+		--hue-rotate-step: 0;
+
+		> * {
+			--hue-rotate-step: 1;
+
+			> * {
+				--hue-rotate-step: 2;
+
+				> * {
+					--hue-rotate-step: 3;
+
+					> * {
+						--hue-rotate-step: 4;
+
+						> * {
+							--hue-rotate-step: 5;
+
+							> * {
+								--hue-rotate-step: 6;
+
+								> * {
+									--hue-rotate-step: 7;
+
+									> * {
+										--hue-rotate-step: 8;
+
+										> * {
+											--hue-rotate-step: 9;
+
+											> * {
+												--hue-rotate-step: 10;
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+}

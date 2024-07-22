@@ -1,0 +1,86 @@
+{% extends "./layouts/Base.njk" %}
+
+{% from "./components/Picture/index.njk" import Picture with context %}
+
+{% set page = {
+	title: "Typography",
+	link: project.root ~ "/typography"
+} %}
+
+{% block Content %}
+	<div class="Page-Centerer">
+		<h1>{{ page.title }}</h1>
+		<h2>Heading level 2</h2>
+		<h3>Heading level 3</h3>
+		<h4>Heading level 4</h4>
+		<h5>Heading level 5</h5>
+		<h6>Heading level 6</h6>
+
+		<p>Proper use of headings (<code>&lt;h1&gt;</code> to <code>&lt;h6&gt;</code>) ensures a clear structure and hierarchy. This is essential for both <em>readability</em> and <strong>SEO</strong>.</p>
+
+		<h2>Paragraphs</h2>
+
+		<p>Dudley was ninety-two, in his second life, and fast approaching time for another rejuvenation. Despite his body having the physical age of a standard fifty-year-old, the prospect of a long degrading campaign within academia was one he regarded with dread. For a supposedly advanced civilization, the Intersolar Commonwealth could be appallingly backward at times, not to mention cruel.</p>
+		<p><i>Maybe it won't be that bad</i>, he told himself. The lie was comforting enough to get him through the rest of the night's shift.</p>
+		<hr>
+		<p>The Carlton AllLander drove Dudley home just after dawn. Like the astronomer, the vehicle was old and worn, but perfectly capable of doing its job. It had a cheap diesel engine, common enough on a semi-frontier world like Gralmond, although its drive array was a thoroughly modern photoneural processor. With its high suspension and deep-tread tyres it could plough along the dirt track to the observatory in all weather and seasons, including the metre-deep snow of Gralmond's winters.</p>
+
+		<h2>Images</h2>
+
+		{{ Picture("aurora", { class: "Image", loading: "lazy", alt: "Aurora" }) }}
+
+		<h2>Unordered lists</h2>
+
+		<ul>
+			<li>Unordered list item.</li>
+			<li>Unordered list item.</li>
+			<li>Unordered list item.</li>
+		</ul>
+
+		<h2>Ordered lists</h2>
+
+		<ol>
+			<li>Ordered list item #1.</li>
+			<li>Ordered list item #2.</li>
+			<li>Ordered list item #3.</li>
+		</ol>
+
+		<h2>Definition lists</h2>
+
+		<dl>
+			<dt>Definition list term #1</dt>
+			<dd>Definition list description #1</dd>
+			<dt>Definition list term #2</dt>
+			<dd>Definition list description #2</dd>
+		</dl>
+
+		<h2>Tables</h2>
+		<table>
+			<thead>
+				<tr>
+					<th>Table header</th>
+					<th>Table header</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>Table data</td>
+					<td>Table data</td>
+				</tr>
+				<tr>
+					<td>Table data</td>
+					<td>Table data</td>
+				</tr>
+			</tbody>
+		</table>
+
+		<h2>Blockquote</h2>
+
+		<figure>
+			<blockquote>
+				<p>The truth may be puzzling. It may take some work to grapple with. It may be counterintuitive. It may contradict deeply held prejudices. It may not be consonant with what we desperately want to be true. But our preferences do not determine what's true. We have a method, and that method helps us to reach not absolute truth, only asymptotic approaches to the truth — never there, just closer and closer, always finding vast new oceans of undiscovered possibilities. Cleverly designed experiments are the key.</p>
+			</blockquote>
+			<figcaption>Carl Sagan, in “<cite>Wonder and Skepticism</cite>”, from the <cite>Skeptical Inquirer</cite> Volume 19, Issue 1 (January-February 1995)</figcaption>
+		</figure>
+
+{% endblock Content %}

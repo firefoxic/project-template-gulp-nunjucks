@@ -1,0 +1,97 @@
+.Navigation {
+	position: relative;
+	z-index: 1;
+}
+
+.Navigation-Button {
+	&:not([hidden]) {
+		@media (--only-small) {
+			display: block flex;
+			align-items: center;
+			gap: 0.5em;
+			padding: 0.5em;
+			border: solid;
+			background: var(--ColorUI-BG_special);
+			border-radius: 0.5em;
+			box-shadow: 0 0.1em 1em 0 oklch(from var(--ColorUI-Text) l c h / var(--shadow-alpha, 0));
+			transition: box-shadow var(--motion-duration, 0.1s);
+
+			&:hover {
+				@media (hover: hover) {
+					--shadow-alpha: 0.5;
+				}
+			}
+
+			&:active {
+				--shadow-alpha: 0;
+			}
+		}
+	}
+
+	@media (--not-small) {
+		display: none;
+	}
+
+	&[aria-expanded="false"] {
+		--icon: var(--Icon_shape_burger);
+	}
+
+	&[aria-expanded="true"] {
+		--icon: var(--Icon_shape_cross);
+	}
+
+	&::before {
+		content: "";
+		inline-size: 2em;
+		aspect-ratio: 1;
+		background: currentcolor;
+		mask: var(--icon) no-repeat center / cover;
+	}
+}
+
+.Navigation-ButtonText {
+	position: absolute;
+	scale: 0;
+}
+
+.Navigation-List {
+	margin: 0;
+	padding: 0;
+	display: block flex;
+	flex-wrap: wrap;
+	gap: 0.5em;
+
+	@media (--only-small) {
+		flex-direction: column;
+		border: solid;
+		background: var(--ColorUI-BG_special);
+		padding: 1em;
+		margin: 0.5em;
+		border-radius: 0.5em;
+
+		:not([hidden]) ~ & {
+			position: absolute;
+			inset-inline-end: -0.5em;
+		}
+
+		[aria-expanded="false"] ~ & {
+			display: none;
+		}
+	}
+}
+
+.Navigation-Item {
+	&::marker {
+		color: transparent;
+	}
+}
+
+.Navigation-Link {
+	font-family: var(--FontAccent-Family);
+	text-decoration: none;
+
+	&[aria-current="page"] {
+		text-decoration: underline;
+		text-underline-offset: 0.3em;
+	}
+}
