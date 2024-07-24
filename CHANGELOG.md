@@ -7,6 +7,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com), and 
 
 ## [Unreleased]
 
+### Fixed
+
+- The navigation link to the current page is now correctly marked with an attribute when deployed to a subdirectory.
+
 ## [0.1.0] — 2024–07–22
 
 ### Added
