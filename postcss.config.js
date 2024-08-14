@@ -1,5 +1,5 @@
 export default function (context) {
-	const { IS_DEVELOPMENT } = context
+	let { IS_DEVELOPMENT } = context
 
 	return {
 		plugins: {

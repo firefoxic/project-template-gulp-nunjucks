@@ -1,6 +1,6 @@
 import { default as firefoxicEslintConfig, globals } from "@firefoxic/eslint-config"
 
-/** @type {import('eslint').Linter.FlatConfig[]} */
+/** @type {import('eslint').Linter.Config[]} */
 export default [
 	{
 		ignores: [`dist/`],
