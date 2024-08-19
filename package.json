@@ -26,7 +26,7 @@
 		"@fontsource-variable/roboto-mono": "^5.0.19"
 	},
 	"scripts": {
-		"prepare": "husky",
+		"prepare": "git config core.hooksPath .git-hooks || true",
 		"start": "gulp",
 		"build": "NODE_ENV=production gulp",
 		"preview": "pnpm build && browser-sync start -s dist/ --cors --no-notify --no-ui",
@@ -54,7 +54,6 @@
 		"gulp-nunjucks": "^6.0.0",
 		"gulp-plumber": "^1.2.1",
 		"gulp-postcss": "^10.0.0",
-		"husky": "^9.1.1",
 		"postcss": "^8.4.39",
 		"postcss-import": "^16.1.0",
 		"postcss-lightningcss": "^1.0.0",
