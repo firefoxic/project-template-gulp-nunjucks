@@ -18,20 +18,20 @@
 	},
 	"type": "module",
 	"engines": {
-		"node": ">=20.15"
+		"node": "^20.13 || >=22.11"
 	},
-	"packageManager": "pnpm@9.7.1",
+	"packageManager": "pnpm@9.12.3",
 	"dependencies": {
-		"@fontsource-variable/roboto-flex": "^5.0.16",
-		"@fontsource-variable/roboto-mono": "^5.0.20"
+		"@fontsource-variable/roboto-flex": "^5.1.0",
+		"@fontsource-variable/roboto-mono": "^5.1.0"
 	},
 	"scripts": {
-		"prepare": "git config core.hooksPath .git-hooks || echo 'Not in a git repo'",
+		"prepare": "git config core.hooksPath .git-hooks || true",
 		"start": "gulp",
 		"build": "NODE_ENV=production gulp",
 		"preview": "pnpm build && browser-sync start -s dist/ --cors --no-notify --no-ui",
 		"version": "update-changelog",
-		"lint": "pnpm --color /^lint:/",
+		"lint": "pnpm /^lint:/",
 		"lint:styles": "stylelint src/**/*.css",
 		"lint:scripts": "eslint",
 		"optimize": "conjure all -r -m",
@@ -40,24 +40,24 @@
 		"optimize:favicons": "conjure favicons"
 	},
 	"devDependencies": {
-		"@firefoxic/conjure": "^2.1.0",
-		"@firefoxic/eslint-config": "^3.0.1",
-		"@firefoxic/stylelint-config": "^4.0.0",
-		"@firefoxic/update-changelog": "^0.2.0",
-		"@firefoxic/utils": "^0.4.0",
-		"browser-sync": "^3.0.2",
+		"@firefoxic/conjure": "^2.1.2",
+		"@firefoxic/eslint-config": "^4.0.0",
+		"@firefoxic/stylelint-config": "^5.0.0",
+		"@firefoxic/update-changelog": "^1.0.0",
+		"@firefoxic/utils": "^1.0.0",
+		"browser-sync": "^3.0.3",
 		"browserslist-to-esbuild": "^2.1.1",
-		"eslint": "^9.9.0",
+		"eslint": "^9.13.0",
 		"gulp": "^5.0.0",
 		"gulp-esbuild": "^0.12.1",
 		"gulp-htmlmin": "^5.0.1",
 		"gulp-nunjucks": "^6.0.0",
 		"gulp-plumber": "^1.2.1",
 		"gulp-postcss": "^10.0.0",
-		"postcss": "^8.4.41",
+		"postcss": "^8.4.47",
 		"postcss-import": "^16.1.0",
 		"postcss-lightningcss": "^1.0.1",
 		"postcss-url": "^10.1.3",
-		"stylelint": "^16.8.2"
+		"stylelint": "^16.10.0"
 	}
 }
