@@ -1,6 +1,7 @@
 {%- macro Navigation(classes) -%}
 	{% set blockClassName = "Navigation" %}
-	<nav class="{{ classes }} {{ blockClassName }}" aria-label="Main navigation">
+	<nav class="{{ classes }} {{ blockClassName }}">
+		<h2 class="{{ blockClassName }}-Title">Main navigation</h2>
 		<button
 			class="{{ blockClassName }}-Button Button"
 			type="button"

@@ -3,6 +3,11 @@
 	z-index: 1;
 }
 
+.Navigation-Title {
+	position: absolute;
+	scale: 0;
+}
+
 .Navigation-Button {
 	&:not([hidden]) {
 		@media (--only-small) {
