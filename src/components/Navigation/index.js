@@ -18,13 +18,14 @@ export function activateNavigation (navigation) {
 	 * @returns {void}
 	 */
 	function toggleState () {
-		let isOpen = toggler.getAttribute(`aria-expanded`) === `false`
+		let isOpen = toggler.getAttribute(`aria-expanded`) === `true`
+		let newState = !isOpen
 
-		toggler.setAttribute(`aria-expanded`, String(isOpen))
+		toggler.setAttribute(`aria-expanded`, String(newState))
 
-		window[`${isOpen ? `add` : `remove`}EventListener`](`keyup`, handleEscape)
+		window[`${newState ? `add` : `remove`}EventListener`](`keyup`, handleEscape)
 
-		if (!isOpen && navigation.querySelector(`:focus`) !== null) toggler.focus()
+		if (!newState && navigation.querySelector(`:focus`) !== null) toggler.focus()
 	}
 
 	/**
@@ -34,8 +35,6 @@ export function activateNavigation (navigation) {
 	 * @returns {void}
 	 */
 	function handleEscape (event) {
-		if (event.code === `Escape`) {
-			toggleState()
-		}
+		if (event.code === `Escape`) toggleState()
 	}
 }
