@@ -1,24 +1,34 @@
-import { env } from "node:process"
-import { extname } from "node:path"
 import { readdir, readFile, rm } from "node:fs/promises"
+import { extname } from "node:path"
+import { env } from "node:process"
 
-import browserslistToEsbuild from "browserslist-to-esbuild"
-import { createGulpEsbuild } from "gulp-esbuild"
 import { getProjectRoot } from "@firefoxic/utils"
-import htmlmin from "gulp-htmlmin"
+import server from "browser-sync"
+import browserslistToEsbuild from "browserslist-to-esbuild"
+import { dest, parallel, series, src, watch } from "gulp"
+import { createGulpEsbuild } from "gulp-esbuild"
 import { nunjucksCompile } from "gulp-nunjucks"
 import plumber from "gulp-plumber"
 import postcss from "gulp-postcss"
-import server from "browser-sync"
-import { dest, parallel, series, src, watch } from "gulp"
+import { minify } from "html-minifier-terser"
+import through2 from "through2"
+
+// TODO: Remove this when vinyl-fs removes the deprecated fs.Stats constructor.
+process.emitWarning = (warning, type) => {
+	if (type === `DeprecationWarning` && warning === `fs.Stats constructor is deprecated.`) return
+
+	return process.emitWarning(warning, type)
+}
 
 const IS_DEVELOPMENT = env.NODE_ENV !== `production`
+const IMAGE_GLOB = `**/*.{avif,webp,svg}`
+const FONT_GLOB = `**/*.woff2`
 const SRC = `./src`
 const DIST = `./dist`
 const STATIC = `./public`
 const ROOT_SHARED_PATHS = [
-	`/shared/fonts/**/*.woff2`,
-	`/shared/images/**/*.{avif,webp,svg}`,
+	`/shared/fonts/${FONT_GLOB}`,
+	`/shared/images/${IMAGE_GLOB}`,
 ]
 
 let plumberOptions = {
@@ -47,9 +57,7 @@ export async function startServer () {
 			let route = path.replace(/(\/\*\*\/.*$)|\/$/, ``)
 			let dir = [`${SRC}${route}`]
 
-			if (route === `/shared/fonts`) {
-				dir.push(...fontDirs)
-			}
+			if (route === `/shared/fonts`) dir.push(...fontDirs)
 
 			return { route, dir }
 		})
@@ -103,7 +111,17 @@ export async function processMarkup () {
 	return src(`${SRC}/pages/**/*.{html,njk}`, { base: SRC })
 		.pipe(plumber(plumberOptions))
 		.pipe(nunjucksCompile(data))
-		.pipe(htmlmin({ collapseWhitespace: !IS_DEVELOPMENT }))
+		.pipe(through2.obj(async (file, enc, cb) => {
+			let minified = await minify(file.contents.toString(), {
+				collapseWhitespace: !IS_DEVELOPMENT,
+				conservativeCollapse: !IS_DEVELOPMENT,
+				decodeEntities: !IS_DEVELOPMENT,
+				removeComments: !IS_DEVELOPMENT,
+			})
+
+			file.contents = Buffer.from(minified)
+			cb(null, file)
+		}))
 		.pipe(dest((path) => {
 			path.dirname = path.dirname.replace(`pages`, ``)
 
@@ -147,10 +165,10 @@ export async function copyStatic () {
 
 export async function copyShared () {
 	let fontDirs = await getFontDirs()
-	let pathsToFonts = fontDirs.map((path) => `${path}**/*.woff2`)
+	let pathsToFonts = fontDirs.map((path) => `${path}${FONT_GLOB}`)
 
 	src(ROOT_SHARED_PATHS.map((path) => `${SRC}${path}`), { base: SRC, encoding: false }).pipe(dest(DIST))
-	src(pathsToFonts, { encoding: false }).pipe(dest(`${DIST}/shared/fonts`))
+	if (pathsToFonts.length) src(pathsToFonts, { encoding: false }).pipe(dest(`${DIST}/shared/fonts`))
 }
 
 function reloadServer () {
@@ -158,7 +176,7 @@ function reloadServer () {
 }
 
 async function getFontDirs () {
-	let { dependencies } = await readJsonFile(`./package.json`)
+	let { dependencies = {} } = await readJsonFile(`./package.json`)
 
 	let fontDependencies = Object.keys(dependencies)
 		.filter((dependency) => dependency.startsWith(`@fontsource`))

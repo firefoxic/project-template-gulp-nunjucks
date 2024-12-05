@@ -45,12 +45,10 @@
 
 .Page-Header {
 	display: block grid;
-	grid: var(--Page-Grid);
 }
 
 .Page-Footer {
 	display: block grid;
-	grid: var(--Page-Grid);
 }
 
 .Page-Content {
