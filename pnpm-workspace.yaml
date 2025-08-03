@@ -1,0 +1,15 @@
+engineStrict: true
+
+gitBranchLockfile: true
+
+mergeGitBranchLockfilesBranchPattern:
+  - main
+  - release*
+
+onlyBuiltDependencies:
+  - esbuild
+  - sharp
+
+shellEmulator: true
+
+verifyDepsBeforeRun: install

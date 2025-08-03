@@ -20,7 +20,6 @@
 	"engines": {
 		"node": "^20.13 || >=22.11"
 	},
-	"packageManager": "pnpm@9.15.0",
 	"dependencies": {
 		"@fontsource-variable/roboto-flex": "^5.1.0",
 		"@fontsource-variable/roboto-mono": "^5.1.0"

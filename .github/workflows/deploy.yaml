@@ -27,6 +27,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: pnpm/action-setup@v4
+        with:
+          version: latest
       - uses: actions/setup-node@v4
         with:
           node-version-file: 'package.json'
@@ -36,8 +38,7 @@ jobs:
       - run: pnpm build
         env:
           REPO_NAME: ${{ github.event.repository.name }}
-      - run: pnpm add -D w3c-html-validator
-      - run: pnpm exec html-validator dist/**/*.html
+      - run: pnpm dlx w3c-html-validator dist/**/*.html
       - uses: actions/configure-pages@v4
       - uses: actions/upload-pages-artifact@v3
         with:
