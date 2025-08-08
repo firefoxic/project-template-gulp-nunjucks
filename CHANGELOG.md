@@ -7,6 +7,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com), and 
 
 ## [Unreleased]
 
+## [1.0.0] — 2025–08–08
+
 ### Changed
 
 - The project now uses `make` to setup environment and run tasks.
@@ -22,5 +24,6 @@ The format is based on [Keep a Changelog](https://keepachangelog.com), and 
 
 - Initial configuration of the project.
 
-[Unreleased]: https://github.com/firefoxic/project-template-gulp-nunjucks/compare/v0.1.0...HEAD
+[Unreleased]: https://github.com/firefoxic/project-template-gulp-nunjucks/compare/v1.0.0...HEAD
+[1.0.0]: https://github.com/firefoxic/project-template-gulp-nunjucks/compare/v0.1.0...v1.0.0
 [0.1.0]: https://github.com/firefoxic/project-template-gulp-nunjucks/releases/tag/v0.1.0
