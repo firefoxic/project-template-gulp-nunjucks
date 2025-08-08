@@ -7,6 +7,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com), and 
 
 ## [Unreleased]
 
+### Changed
+
+- The project now requires node.js version 22.18.0 or higher.
+
 ### Fixed
 
 - The navigation link to the current page is now correctly marked with an attribute when deployed to a subdirectory.

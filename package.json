@@ -18,7 +18,7 @@
 	},
 	"type": "module",
 	"engines": {
-		"node": "^20.13 || >=22.11"
+		"node": ">=22.18"
 	},
 	"dependencies": {
 		"@fontsource-variable/roboto-flex": "^5.2.6",
