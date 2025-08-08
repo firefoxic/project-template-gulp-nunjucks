@@ -9,6 +9,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com), and 
 
 ### Changed
 
+- The project now uses `make` to setup environment and run tasks.
 - The project now requires node.js version 22.18.0 or higher.
 
 ### Fixed

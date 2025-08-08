@@ -7,41 +7,25 @@ Project template based on Gulp and Nunjucks.
 
 ## Minimum required environment
 
-### Terminal + git
+### Terminal + git + make
 
-On Windows, install git with git-bash or use WSL.
+On Windows, install git with git-bash or use WSL. And ensure that the `make` command is available.
 
-### pnpm
+### Setup project environment
 
-To install pnpm, run the following command:
-
-```shell
-curl -fsSL https://get.pnpm.io/install.sh | sh -
-```
-
-### Node.js
-
-To install Node.js, run the following command:
+Run the following command:
 
 ```shell
-pnpm env use --global lts
+make setup
 ```
 
-### Dependencies
-
-To install the project dependencies, run the following command:
+Then run:
 
 ```shell
-pnpm install
+make help
 ```
 
-After installing the dependencies, you can start the dev server:
-
-```shell
-pnpm start
-```
-
-and begin development.
+to see the available `make` targets.
 
 ## Components
 

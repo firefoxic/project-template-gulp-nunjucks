@@ -21,6 +21,6 @@ jobs:
           node-version-file: 'package.json'
           cache: pnpm
       - run: pnpm install
-      - run: pnpm lint
-      - run: pnpm exec gulp processMarkup
+      - run: make lint
+      - run: NODE_ENV=production node --run gulp -- processMarkup
       - run: pnpm dlx w3c-html-validator dist/**/*.html

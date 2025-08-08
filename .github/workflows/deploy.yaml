@@ -34,8 +34,8 @@ jobs:
           node-version-file: 'package.json'
           cache: pnpm
       - run: pnpm install
-      - run: pnpm lint
-      - run: pnpm build
+      - run: make lint
+      - run: make build
         env:
           REPO_NAME: ${{ github.event.repository.name }}
       - run: pnpm dlx w3c-html-validator dist/**/*.html

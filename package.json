@@ -25,18 +25,12 @@
 		"@fontsource-variable/roboto-mono": "^5.2.6"
 	},
 	"scripts": {
-		"prepare": "git config --local core.hooksPath .githooks",
-		"start": "gulp",
-		"build": "NODE_ENV=production gulp",
-		"preview": "pnpm build && browser-sync start -s dist/ --cors --no-notify --no-ui",
+		"gulp": "gulp",
+		"eslint": "eslint",
+		"stylelint": "stylelint 'src/**/*.css'",
 		"version": "update-changelog",
-		"lint": "pnpm /^lint:/",
-		"lint:styles": "stylelint src/**/*.css",
-		"lint:scripts": "eslint",
-		"optimize": "conjure all -r -m",
-		"optimize:icons": "conjure icons -m",
-		"optimize:images": "conjure images -r -m",
-		"optimize:favicons": "conjure favicons"
+		"prepare": "make setup",
+		"help": "make help"
 	},
 	"devDependencies": {
 		"@firefoxic/conjure": "^3.0.1",
