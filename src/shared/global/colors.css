@@ -1,40 +1,9 @@
-@property --ColorPalette-White {
-	syntax: "<color>";
-	inherits: true;
-	initial-value: oklch(100% 0 0);
-}
-
-@property --ColorPalette-Black {
-	syntax: "<color>";
-	inherits: true;
-	initial-value: oklch(0% 0 0);
-}
-
-@property --ColorPalette-Yellow {
-	syntax: "<color>";
-	inherits: true;
-	initial-value: oklch(86% 0.17 90);
-}
-
-@property --ColorPalette-Cyan {
-	syntax: "<color>";
-	inherits: true;
-	initial-value: oklch(86% 0.17 170);
-}
-
-@property --ColorPalette-Gray_light {
-	syntax: "<color>";
-	inherits: true;
-	initial-value: oklch(100% 0 0);
-}
-
-@property --ColorPalette-Gray_dark {
-	syntax: "<color>";
-	inherits: true;
-	initial-value: oklch(0% 0 0);
-}
-
 :root {
+	--ColorPalette-White: oklch(100% 0 0);
+	--ColorPalette-Black: oklch(0% 0 0);
+	--ColorPalette-Yellow: oklch(86% 0.17 90);
+	--ColorPalette-Cyan: oklch(86% 0.17 170);
+
 	--ColorPalette-Gray_light: oklab(from var(--ColorPalette-White) calc(l * 0.95) a b);
 	--ColorPalette-Gray_dark: oklab(from var(--ColorPalette-White) calc(l * 0.25) a b);
 

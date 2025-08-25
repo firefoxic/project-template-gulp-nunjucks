@@ -20,9 +20,9 @@ lint: ## 🧪 Check code by eslint and stylelint
 	'
 
 optimize: ## 🖼️  Optimize assets (assets=all|icons|images|favicons)
-	@CMD="pnpm exec conjure"; \
+	@CMD="pnpm exec optimize"; \
 	case "$(assets)" in \
-		all|images|icons|favicons) CMD="$$CMD $$assets -r -m" ;; \
+		all|images|icons|favicons) CMD="$$CMD $$assets -r" ;; \
 	esac ; \
 	eval "$$CMD"
 

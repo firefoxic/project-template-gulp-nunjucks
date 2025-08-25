@@ -87,7 +87,7 @@ export async function startServer () {
 }
 
 export async function processMarkup () {
-	let data = await readJsonFile(`${SRC}/data.json`)
+	let { default: data } = await import(`${SRC}/data.json`, { "with": { type: `json` } })
 	let projectData = await readJsonFile(`${STATIC}/manifest.webmanifest`)
 
 	data.project = {
@@ -102,10 +102,10 @@ export async function processMarkup () {
 	let jsonFiles = filePaths.filter((fileName) => extname(fileName) === `.json`)
 
 	for (let jsonFile of jsonFiles) {
-		let filePath = jsonFile.replace(/\\/g, `/`)
-		let imageData = await readJsonFile(`${SRC}/shared/images/${filePath}`)
+		let filePath = `${SRC}/shared/images/${jsonFile.replace(/\\/g, `/`)}`
+		let { default: imageData } = await import(filePath, { "with": { type: `json` } })
 
-		data.images[filePath.slice(0, -5)] = imageData
+		data.images[imageData.name] = imageData
 	}
 
 	return src(`${SRC}/pages/**/*.{html,njk}`, { base: SRC })
@@ -176,7 +176,7 @@ function reloadServer () {
 }
 
 async function getFontDirs () {
-	let { dependencies = {} } = await readJsonFile(`./package.json`)
+	let { default: { dependencies = {} } } = await import(`./package.json`, { "with": { type: `json` } })
 
 	let fontDependencies = Object.keys(dependencies)
 		.filter((dependency) => dependency.startsWith(`@fontsource`))

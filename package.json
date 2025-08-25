@@ -33,7 +33,7 @@
 		"help": "make help"
 	},
 	"devDependencies": {
-		"@firefoxic/conjure": "^3.0.1",
+		"@firefoxic/optimize": "^4.0.0",
 		"@firefoxic/eslint-config": "^5.0.0",
 		"@firefoxic/stylelint-config": "^5.0.0",
 		"@firefoxic/update-changelog": "^1.0.0",

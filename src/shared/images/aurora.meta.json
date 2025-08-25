@@ -1,0 +1,38 @@
+{
+	"name": "aurora",
+	"maxDensity": 2,
+	"formats": [
+		"avif",
+		"webp"
+	],
+	"sizes": [
+		{
+			"width": 640,
+			"height": 518,
+			"breakpoint": 640
+		},
+		{
+			"width": 1280,
+			"height": 848,
+			"breakpoint": 1280
+		},
+		{
+			"width": 2048,
+			"height": 1152
+		}
+	],
+	"paths": [
+		"./src/shared/images/aurora~640@2x.avif",
+		"./src/shared/images/aurora~640@1x.avif",
+		"./src/shared/images/aurora~1280@2x.avif",
+		"./src/shared/images/aurora~1280@1x.avif",
+		"./src/shared/images/aurora@2x.avif",
+		"./src/shared/images/aurora@1x.avif",
+		"./src/shared/images/aurora~640@2x.webp",
+		"./src/shared/images/aurora~640@1x.webp",
+		"./src/shared/images/aurora~1280@2x.webp",
+		"./src/shared/images/aurora~1280@1x.webp",
+		"./src/shared/images/aurora@2x.webp",
+		"./src/shared/images/aurora@1x.webp"
+	]
+}

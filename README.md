@@ -125,7 +125,7 @@ Example of two images, each in three versions for different viewport sizes:
 			└── eclipse.png
 ```
 
-Run `pnpm optimize:images`. By default, the command assumes these files are for double pixel density. This can be changed with the `-d` option, for example `pnpm optimize:images -d 3`. By default, the source files are converted to `.webp` and `.avif`. This can also be changed with the `-f` and `-a` options (see [option descriptions](https://github.com/firefoxic/conjure?tab=readme-ov-file#options)).
+Run `pnpm optimize:images`. By default, the command assumes these files are for double pixel density. This can be changed with the `-d` option, for example `pnpm optimize:images -d 3`. By default, the source files are converted to `.webp` and `.avif`. This can also be changed with the `-f` and `-a` options (see [option descriptions](https://github.com/firefoxic/optimize?tab=readme-ov-file#options)).
 
 Additionally, the command will delete the source files after conversion and create `json` and `js` metadata files. For this project, `js` files are not needed and can be deleted, while `json` files are used in the `Picture` macro. The source files above will produce the following set of final files:
 

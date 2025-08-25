@@ -13,7 +13,7 @@
 
 			{%- for size in sizes %}
 				{%- set isImgTag = lastFormat and loop.last %}
-				{%- set suffix = ("-" ~ size.breakpoint) if size.breakpoint else "" %}
+				{%- set suffix = ("~" ~ size.breakpoint) if size.breakpoint else "" %}
 				{%- set path = "" %}
 				{%- set srcset %}
 					{%- set comma = joiner(", ") %}
@@ -52,7 +52,7 @@
 					{% else %}
 						type="image/{{ format }}"
 						{% if size.breakpoint -%}
-							media="(width >= {{ size.breakpoint }}px)"
+							media="(width <= {{ size.breakpoint }}px)"
 						{%- endif %}
 					{% endif %}
 				>
