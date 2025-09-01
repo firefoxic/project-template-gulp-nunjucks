@@ -1,5 +1,5 @@
 start: ## 🚀 Start the project in development mode
-	@node --run gulp
+	@trap "exit 0" INT; node --run gulp
 
 build: ## 🏗️  Build the project for production
 	@NODE_ENV=production node --run gulp
