@@ -1,0 +1,24 @@
+{
+	"name": "aurora",
+	"maxDensity": 2,
+	"formats": [
+		"avif",
+		"webp"
+	],
+	"sizes": [
+		{
+			"width": 640,
+			"height": 518,
+			"breakpoint": 640
+		},
+		{
+			"width": 1280,
+			"height": 848,
+			"breakpoint": 1280
+		},
+		{
+			"width": 2048,
+			"height": 1152
+		}
+	]
+}
