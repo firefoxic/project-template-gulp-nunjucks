@@ -88,13 +88,8 @@ export async function startServer () {
 
 export async function processMarkup () {
 	let { default: data } = await import(`${SRC}/data.json`, { "with": { type: `json` } })
-	let projectData = await readJsonFile(`${STATIC}/manifest.webmanifest`)
 
-	data.project = {
-		name: projectData.name,
-		description: projectData.description,
-		root: getProjectRoot(),
-	}
+	data.project.root = getProjectRoot()
 	data.images = {}
 
 	let filePaths = await readdir(`${SRC}/shared/images`, { recursive: true })
@@ -189,10 +184,4 @@ async function removeDist () {
 		force: true,
 		recursive: true,
 	})
-}
-
-async function readJsonFile (path) {
-	let file = await readFile(path)
-
-	return JSON.parse(file)
 }

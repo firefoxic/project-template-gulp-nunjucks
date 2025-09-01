@@ -1,4 +1,8 @@
 {
+	"project": {
+		"name": "Project template",
+		"description": "Project template based on Gulp and Nunjucks."
+	},
 	"navLinks": [
 		{
 			"text": "Main page",
