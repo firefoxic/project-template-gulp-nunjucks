@@ -19,12 +19,8 @@ lint: ## 🧪 Check code by eslint and stylelint
 		if [ $$code1 -ne 0 ] || [ $$code2 -ne 0 ]; then exit 1 ; fi \
 	'
 
-optimize: ## 🖼️  Optimize assets (assets=all|icons|images|favicons)
-	@CMD="pnpm exec optimize"; \
-	case "$(assets)" in \
-		all|images|icons|favicons) CMD="$$CMD $$assets -r" ;; \
-	esac ; \
-	eval "$$CMD"
+optimize: ## 🖼️  Optimize graphic assets
+	@pnpm exec optimize assets
 
 setup: ## 🛠️  Setup the project environment
 	$(call remove_wrong_installation)

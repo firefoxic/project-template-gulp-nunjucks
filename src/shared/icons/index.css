@@ -1,22 +1,22 @@
-@property --Icon_shape_burger {
+@property --icon-shape-burger {
 	syntax: "<url>";
 	inherits: false;
 	initial-value: url("./burger.svg");
 }
 
-@property --Icon_shape_cross {
+@property --icon-shape-cross {
 	syntax: "<url>";
 	inherits: false;
 	initial-value: url("./cross.svg");
 }
 
-@property --Icon_shape_moon {
+@property --icon-shape-moon {
 	syntax: "<url>";
 	inherits: false;
 	initial-value: url("./moon.svg");
 }
 
-@property --Icon_shape_sun {
+@property --icon-shape-sun {
 	syntax: "<url>";
 	inherits: false;
 	initial-value: url("./sun.svg");

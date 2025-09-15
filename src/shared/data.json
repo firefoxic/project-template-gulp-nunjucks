@@ -1,0 +1,68 @@
+{
+	"project": {
+		"name": "Project template",
+		"description": "Project template based on Gulp and Nunjucks."
+	},
+	"navLinks": [
+		{
+			"text": "Main page",
+			"rootUrl": "/"
+		},
+		{
+			"text": "Typography",
+			"rootUrl": "/typography"
+		},
+		{
+			"text": "Lost page",
+			"rootUrl": "/lost"
+		}
+	],
+	"images": {
+		"aurora": {
+			"maxDensity": 2,
+			"formats": [
+				"avif",
+				"webp"
+			],
+			"sizes": [
+				{
+					"width": 640,
+					"height": 518,
+					"breakpoint": 640
+				},
+				{
+					"width": 1280,
+					"height": 848,
+					"breakpoint": 1280
+				},
+				{
+					"width": 2048,
+					"height": 1152
+				}
+			]
+		},
+		"eclipse": {
+			"maxDensity": 2,
+			"formats": [
+				"avif",
+				"webp"
+			],
+			"sizes": [
+				{
+					"width": 640,
+					"height": 518,
+					"breakpoint": 640
+				},
+				{
+					"width": 1280,
+					"height": 848,
+					"breakpoint": 1280
+				},
+				{
+					"width": 2048,
+					"height": 1152
+				}
+			]
+		}
+	}
+}

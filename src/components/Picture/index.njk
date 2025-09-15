@@ -1,6 +1,6 @@
 {% macro Picture(name, attributes) -%}
 
-	{% set directory = project.root ~ "/shared/images/" -%}
+	{% set directory = project.root ~ "/images/" -%}
 	{% set sizes = images[name].sizes -%}
 	{% set formats = images[name].formats -%}
 	{% set maxDensity = images[name].maxDensity -%}

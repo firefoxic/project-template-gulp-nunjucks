@@ -38,11 +38,11 @@
 	}
 
 	&[aria-expanded="false"] {
-		--icon: var(--Icon_shape_burger);
+		--icon: var(--icon-shape-burger);
 	}
 
 	&[aria-expanded="true"] {
-		--icon: var(--Icon_shape_cross);
+		--icon: var(--icon-shape-cross);
 	}
 
 	&::before {

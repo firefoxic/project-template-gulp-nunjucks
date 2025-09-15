@@ -5,14 +5,17 @@ dist/
 raw/
 
 # old raster formats
+public/images/**/*.gif
+public/images/**/*.jpeg
+public/images/**/*.jpg
+public/images/**/*.png
 src/**/*.gif
 src/**/*.jpeg
 src/**/*.jpg
 src/**/*.png
 
 # generated files
-public/Links.md
-src/shared/images/**/*.js
+src/shared/links.md
 
 # source favicons
 public/16.svg

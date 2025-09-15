@@ -1,5 +1,4 @@
-import { readdir, readFile, rm } from "node:fs/promises"
-import { extname } from "node:path"
+import { readFile, rm } from "node:fs/promises"
 import { env } from "node:process"
 
 import { getProjectRoot } from "@firefoxic/utils"
@@ -21,15 +20,12 @@ process.emitWarning = (warning, type) => {
 }
 
 const IS_DEVELOPMENT = env.NODE_ENV !== `production`
-const IMAGE_GLOB = `**/*.{avif,webp,svg}`
 const FONT_GLOB = `**/*.woff2`
 const SRC = `./src`
 const DIST = `./dist`
 const STATIC = `./public`
-const ROOT_SHARED_PATHS = [
-	`/shared/fonts/${FONT_GLOB}`,
-	`/shared/images/${IMAGE_GLOB}`,
-]
+const SHARED = `${SRC}/shared`
+const SHARED_PATTERNS = [`${SHARED}/fonts/${FONT_GLOB}`]
 
 let plumberOptions = {
 	errorHandler (error) {
@@ -52,10 +48,11 @@ export default series(
 export async function startServer () {
 	let fontDirs = await getFontDirs()
 
-	let serveStatic = ROOT_SHARED_PATHS
-		.map((path) => {
-			let route = path.replace(/(\/\*\*\/.*$)|\/$/, ``)
-			let dir = [`${SRC}${route}`]
+	let serveStatic = SHARED_PATTERNS
+		.map((pattern) => {
+			let path = pattern.replace(/(\/\*\*\/.*$)|\/$/, ``)
+			let route = path.replace(SRC, ``)
+			let dir = [path]
 
 			if (route === `/shared/fonts`) dir.push(...fontDirs)
 
@@ -77,31 +74,17 @@ export async function startServer () {
 		})
 	})
 
-	let sharedPaths = ROOT_SHARED_PATHS.map((PATH) => `${SRC}${PATH}`)
-
 	watch(`${SRC}/**/*.{html,njk,json}`, series(processMarkup))
 	watch(`${SRC}/**/*.{css,svg}`, series(processStyles))
 	watch(`${SRC}/**/*.js`, series(processScripts))
 	watch(`${STATIC}/**/*`, series(copyStatic, reloadServer))
-	watch(sharedPaths, series(reloadServer))
+	watch(SHARED_PATTERNS, series(reloadServer))
 }
 
 export async function processMarkup () {
-	let { default: data } = await import(`${SRC}/data.json`, { "with": { type: `json` } })
+	let { default: data } = await import(`${SHARED}/data.json`, { "with": { type: `json` } })
 
 	data.project.root = getProjectRoot()
-	data.images = {}
-
-	let filePaths = await readdir(`${SRC}/shared/images`, { recursive: true })
-
-	let jsonFiles = filePaths.filter((fileName) => extname(fileName) === `.json`)
-
-	for (let jsonFile of jsonFiles) {
-		let filePath = `${SRC}/shared/images/${jsonFile.replace(/\\/g, `/`)}`
-		let { default: imageData } = await import(filePath, { "with": { type: `json` } })
-
-		data.images[imageData.name] = imageData
-	}
 
 	return src(`${SRC}/pages/**/*.{html,njk}`, { base: SRC })
 		.pipe(plumber(plumberOptions))
@@ -162,7 +145,7 @@ export async function copyShared () {
 	let fontDirs = await getFontDirs()
 	let pathsToFonts = fontDirs.map((path) => `${path}${FONT_GLOB}`)
 
-	src(ROOT_SHARED_PATHS.map((path) => `${SRC}${path}`), { base: SRC, encoding: false }).pipe(dest(DIST))
+	src(SHARED_PATTERNS, { base: SRC, encoding: false }).pipe(dest(DIST))
 	if (pathsToFonts.length) src(pathsToFonts, { encoding: false }).pipe(dest(`${DIST}/shared/fonts`))
 }
 
