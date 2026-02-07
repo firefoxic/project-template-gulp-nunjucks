@@ -1,4 +1,3 @@
 :focus-visible {
-	outline: 2px solid var(--ColorUI-Accent);
 	outline-offset: 2px;
 }
