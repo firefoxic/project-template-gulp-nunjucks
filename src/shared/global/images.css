@@ -9,6 +9,7 @@ img {
 	}
 }
 
-:is(picture, source) {
+picture,
+source {
 	display: contents;
 }
