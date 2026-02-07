@@ -50,7 +50,7 @@ help: ## 🧾 Print this message
 
 .PHONY: prepare start build preview lint help clean optimize
 
-REQUIRED_PNPM := ^10.14.0
+REQUIRED_PNPM := ^10.28.2
 
 ANSI_RESET := \033[0m
 ANSI_BOLD := \033[1m
