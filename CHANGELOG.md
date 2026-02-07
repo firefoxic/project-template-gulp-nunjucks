@@ -7,6 +7,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com), and 
 
 ## [Unreleased]
 
+### Fixed
+
+- The project now supports more browser versions.
+
 ## [1.0.0] — 2025–08–08
 
 ### Changed
