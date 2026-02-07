@@ -50,7 +50,7 @@ help: ## 🧾 Print this message
 
 .PHONY: prepare start build preview lint help clean optimize
 
-REQUIRED_PNPM := ^10.28.2
+REQUIRED_PNPM := $(shell jq -r '.engines.pnpm' package.json)
 
 ANSI_RESET := \033[0m
 ANSI_BOLD := \033[1m
