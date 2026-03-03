@@ -16,7 +16,7 @@ concurrency:
   cancel-in-progress: true
 
 env:
-  FORCE_COLOR: true
+  FORCE_COLOR: 2
 
 jobs:
   deploy:
@@ -25,11 +25,11 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - uses: pnpm/action-setup@v4
         with:
           version: latest
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v6
         with:
           node-version-file: 'package.json'
           cache: pnpm
@@ -39,8 +39,8 @@ jobs:
         env:
           REPO_NAME: ${{ github.event.repository.name }}
       - run: pnpm dlx w3c-html-validator dist/**/*.html
-      - uses: actions/configure-pages@v4
-      - uses: actions/upload-pages-artifact@v3
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v4
         with:
           path: ./dist
       - uses: actions/deploy-pages@v4
