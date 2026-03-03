@@ -1,21 +1,5 @@
 {
-	"name": "project-template-gulp-nunjucks",
-	"description": "Project template based on Gulp and Nunjucks.",
 	"private": true,
-	"version": "1.0.0",
-	"license": "MIT",
-	"author": {
-		"name": "Sergey Artemov",
-		"email": "firefoxic.dev@gmail.com"
-	},
-	"homepage": "https://github.com/firefoxic/project-template-gulp-nunjucks#readme",
-	"bugs": {
-		"url": "https://github.com/firefoxic/project-template-gulp-nunjucks/issues"
-	},
-	"repository": {
-		"type": "git",
-		"url": "git+https://github.com/firefoxic/project-template-gulp-nunjucks.git"
-	},
 	"type": "module",
 	"scripts": {
 		"help": "make help",
