@@ -17,6 +17,10 @@
 		"url": "git+https://github.com/firefoxic/project-template-gulp-nunjucks.git"
 	},
 	"type": "module",
+	"scripts": {
+		"help": "make help",
+		"prepare": "make setup"
+	},
 	"engines": {
 		"node": ">=22.18",
 		"pnpm": ">=10.30"
@@ -24,13 +28,6 @@
 	"dependencies": {
 		"@fontsource-variable/roboto-flex": "^5.2.8",
 		"@fontsource-variable/roboto-mono": "^5.2.8"
-	},
-	"scripts": {
-		"gulp": "gulp",
-		"eslint": "eslint",
-		"stylelint": "stylelint 'src/**/*.css'",
-		"prepare": "make setup",
-		"help": "make help"
 	},
 	"devDependencies": {
 		"@firefoxic/eslint-config": "^7.0.0",

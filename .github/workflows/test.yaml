@@ -22,5 +22,5 @@ jobs:
           cache: pnpm
       - run: pnpm install
       - run: make lint
-      - run: NODE_ENV=production node --run gulp -- processMarkup
+      - run: NODE_ENV=production node --run ./node_modules/.bin/gulp -- processMarkup
       - run: pnpm dlx w3c-html-validator dist/**/*.html

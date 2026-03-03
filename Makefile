@@ -1,17 +1,19 @@
+export PATH := ./node_modules/.bin:$(PATH)
+
 help: ## 🧾 Print this message
 	$(call print_help)
 .PHONY: help
 
 start: ## 🚀 Start the project in development mode
-	@trap "exit 0" INT; node --run gulp
+	@trap "exit 0" INT; gulp
 .PHONY: start
 
 build: ## 🏗️  Build the project for production
-	@NODE_ENV=production node --run gulp
+	@NODE_ENV=production gulp
 .PHONY: build
 
 preview: build ## 🧐 Preview the production built
-	@pnpm exec browser-sync start -s dist/ --cors --no-notify --no-ui
+	@browser-sync start -s dist/ --cors --no-notify --no-ui
 .PHONY: preview
 
 clean: ## 🧹 Clean the project
@@ -20,8 +22,8 @@ clean: ## 🧹 Clean the project
 
 lint: ## 🧪 Check code by eslint and stylelint
 	@bash -c '\
-		node --run eslint & pid1=$$! ; \
-		node --run stylelint & pid2=$$! ; \
+		eslint & pid1=$$! ; \
+		stylelint "src/**/*.css" & pid2=$$! ; \
 		wait $$pid1 ; code1=$$? ; \
 		wait $$pid2 ; code2=$$? ; \
 		if [ $$code1 -ne 0 ] || [ $$code2 -ne 0 ]; then exit 1 ; fi \
@@ -29,7 +31,7 @@ lint: ## 🧪 Check code by eslint and stylelint
 .PHONY: lint
 
 optimize: ## 🖼️  Optimize graphic assets
-	@pnpm exec optimize assets
+	@optimize assets
 .PHONY: optimize
 
 setup: ## 🛠️  Setup the project environment
