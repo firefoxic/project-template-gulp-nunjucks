@@ -12,13 +12,6 @@ import postcss from "gulp-postcss"
 import { minify } from "html-minifier-terser"
 import through2 from "through2"
 
-// TODO: Remove this when vinyl-fs removes the deprecated fs.Stats constructor.
-process.emitWarning = (warning, type) => {
-	if (type === `DeprecationWarning` && warning === `fs.Stats constructor is deprecated.`) return
-
-	return process.emitWarning(warning, type)
-}
-
 const IS_DEVELOPMENT = env.NODE_ENV !== `production`
 const FONT_GLOB = `**/*.woff2`
 const SRC = `./src`
