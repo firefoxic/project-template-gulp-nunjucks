@@ -1,22 +1,22 @@
 {%- macro Navigation(classes) -%}
-	{% set blockClassName = "Navigation" %}
+	{% set blockClassName = "navigation" %}
 	<nav class="{{ classes }} {{ blockClassName }}">
-		<h2 class="{{ blockClassName }}-Title">Main navigation</h2>
+		<h2 class="{{ blockClassName }}__title">Main navigation</h2>
 		<button
-			class="{{ blockClassName }}-Button Button"
+			class="{{ blockClassName }}__button button"
 			type="button"
-			aria-controls="Navigation-List"
+			aria-controls="navigation__list"
 			hidden
 		>
-			<span class="{{ blockClassName }}-ButtonText">Toggle navigation list</span>
+			<span class="{{ blockClassName }}__button-text">Toggle navigation list</span>
 		</button>
 
-		<ul class="{{ blockClassName }}-List " id="Navigation-List">
+		<ul class="{{ blockClassName }}__list " id="navigation__list">
 			{% for link in navLinks %}
 				{%- set linkUrl = project.root ~ link.rootUrl -%}
-				<li class="{{ blockClassName }}-Item">
+				<li class="{{ blockClassName }}__item">
 					<a
-						class="{{ blockClassName }}-Link"
+						class="{{ blockClassName }}__link"
 						href="{{ linkUrl }}"
 						{{ "aria-current=page" if linkUrl === page.link -}}
 					>{{ link.text }}</a>

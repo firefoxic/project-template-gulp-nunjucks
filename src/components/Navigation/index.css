@@ -1,14 +1,14 @@
-.Navigation {
+.navigation {
 	position: relative;
 	z-index: 1;
 }
 
-.Navigation-Title {
+.navigation__title {
 	position: absolute;
 	scale: 0;
 }
 
-.Navigation-Button {
+.navigation__button {
 	&:not([hidden]) {
 		@media (--only-small) {
 			display: block flex;
@@ -58,12 +58,12 @@
 	}
 }
 
-.Navigation-ButtonText {
+.navigation__button-text {
 	position: absolute;
 	scale: 0;
 }
 
-.Navigation-List {
+.navigation__list {
 	margin: 0;
 	padding: 0;
 	display: block flex;
@@ -93,13 +93,13 @@
 	}
 }
 
-.Navigation-Item {
+.navigation__item {
 	&::marker {
 		color: transparent;
 	}
 }
 
-.Navigation-Link {
+.navigation__link {
 	font-family: var(--FontAccent-Family);
 	text-decoration: none;
 

@@ -1,10 +1,10 @@
-.Logo-Link {
+.logo__link {
 	margin-block: 0.5em;
 	display: block flow-root;
 	font-family: var(--FontAccent-Family);
 }
 
-.Logo-Image {
+.logo__image {
 	display: block flow-root;
 	block-size: 2lh;
 	inline-size: auto;

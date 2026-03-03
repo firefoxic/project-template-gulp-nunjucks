@@ -1,4 +1,4 @@
-.Header {
+.header {
 	background: var(--ColorUI-BG_special);
 
 	@media (--not-small) {
@@ -6,7 +6,7 @@
 	}
 }
 
-.Header-Container {
+.header__container {
 	display: block flex;
 	justify-content: space-between;
 	align-items: center;

@@ -23,23 +23,23 @@
 		{{ scripts() }}
 	</head>
 
-	<body class="Page">
+	<body class="page">
 
-		{% call Header("Page-Header") %}
-		<div class="Page-Centerer Header-Container">
-			{{ Logo("Header-Logo") }}
-			{{ Navigation("Header-Navigation") }}
+		{% call Header("page__header") %}
+		<div class="page__centerer header__container">
+			{{ Logo("header__logo") }}
+			{{ Navigation("header__navigation") }}
 		</div>
 		{% endcall %}
 
-		<main class="Page-Content">
+		<main class="page__content">
 			{% block Content %}{% endblock %}
 		</main>
 
-		{% call Footer("Page-Footer") %}
-		<div class="Page-Centerer Footer-Container">
-			{{ Logo("Footer-Logo") }}
-			{{ Copyright("Footer-Copyright") }}
+		{% call Footer("page__footer") %}
+		<div class="page__centerer footer__container">
+			{{ Logo("footer__logo") }}
+			{{ Copyright("footer__copyright") }}
 		</div>
 		{% endcall %}
 

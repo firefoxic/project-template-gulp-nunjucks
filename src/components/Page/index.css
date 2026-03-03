@@ -16,14 +16,14 @@
 	initial-value: 1rem;
 }
 
-.Page {
+.page {
 	margin: initial;
 	min-block-size: 100svb;
 	display: block grid;
 	grid-template-rows: auto 1fr;
 }
 
-.Page-Centerer {
+.page__centerer {
 	margin-inline:
 		clamp(
 			1px * var(--ContentIndent-Min),
@@ -43,15 +43,15 @@
 	}
 }
 
-.Page-Header {
+.page__header {
 	display: block grid;
 }
 
-.Page-Footer {
+.page__footer {
 	display: block grid;
 }
 
-.Page-Content {
+.page__content {
 	display: block grid;
 	align-self: start;
 	align-content: start;
