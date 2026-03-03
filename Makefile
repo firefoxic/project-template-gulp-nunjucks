@@ -20,9 +20,9 @@ clean: ## 🧹 Clean the project
 	@rm -rf dist
 .PHONY: clean
 
-lint: ## 🧪 Check code by eslint and stylelint
+lint: ## 🧪 Check code by oxlint and stylelint
 	@bash -c '\
-		eslint & pid1=$$! ; \
+		oxlint & pid1=$$! ; \
 		stylelint "src/**/*.css" & pid2=$$! ; \
 		wait $$pid1 ; code1=$$? ; \
 		wait $$pid2 ; code2=$$? ; \

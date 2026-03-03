@@ -1,0 +1,25 @@
+{
+	"$schema": "./node_modules/oxlint/configuration_schema.json",
+	"extends": [
+		"./node_modules/@firefoxic/oxlint-config/lib/syntactic.jsonc",
+		"./node_modules/@firefoxic/oxlint-config/lib/stylistic.jsonc",
+	],
+	"overrides": [
+		{
+			"files": [
+				"src/**/*.js"
+			],
+			"env": {
+				"browser": true,
+			},
+		},
+		{
+			"files": [
+				"!src/**/*.js"
+			],
+			"env": {
+				"node": true,
+			},
+		},
+	],
+}

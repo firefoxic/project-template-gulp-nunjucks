@@ -22,6 +22,7 @@ const SHARED_PATTERNS = [`${SHARED}/fonts/${FONT_GLOB}`]
 
 let plumberOptions = {
 	errorHandler (error) {
+		// oxlint-disable-next-line no-console
 		console.error(error.message)
 		this.emit(`end`)
 	},
@@ -129,7 +130,7 @@ export function processScripts () {
 		.pipe(server.stream())
 }
 
-export async function copyStatic () {
+export function copyStatic () {
 	return src(`${STATIC}/**/*`, { encoding: false })
 		.pipe(dest(DIST))
 }
@@ -139,7 +140,7 @@ export async function copyShared () {
 	let pathsToFonts = fontDirs.map((path) => `${path}${FONT_GLOB}`)
 
 	src(SHARED_PATTERNS, { base: SRC, encoding: false }).pipe(dest(DIST))
-	if (pathsToFonts.length) src(pathsToFonts, { encoding: false }).pipe(dest(`${DIST}/shared/fonts`))
+	if (pathsToFonts.length > 0) src(pathsToFonts, { encoding: false }).pipe(dest(`${DIST}/shared/fonts`))
 }
 
 function reloadServer () {

@@ -1,4 +1,4 @@
-export default function (context) {
+export default function defineConfig (context) {
 	let { IS_DEVELOPMENT } = context
 
 	return {
