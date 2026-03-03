@@ -1,14 +1,22 @@
+help: ## 🧾 Print this message
+	$(call print_help)
+.PHONY: help
+
 start: ## 🚀 Start the project in development mode
 	@trap "exit 0" INT; node --run gulp
+.PHONY: start
 
 build: ## 🏗️  Build the project for production
 	@NODE_ENV=production node --run gulp
+.PHONY: build
 
 preview: build ## 🧐 Preview the production built
 	@pnpm exec browser-sync start -s dist/ --cors --no-notify --no-ui
+.PHONY: preview
 
 clean: ## 🧹 Clean the project
 	@rm -rf dist
+.PHONY: clean
 
 lint: ## 🧪 Check code by eslint and stylelint
 	@bash -c '\
@@ -18,9 +26,11 @@ lint: ## 🧪 Check code by eslint and stylelint
 		wait $$pid2 ; code2=$$? ; \
 		if [ $$code1 -ne 0 ] || [ $$code2 -ne 0 ]; then exit 1 ; fi \
 	'
+.PHONY: lint
 
 optimize: ## 🖼️  Optimize graphic assets
 	@pnpm exec optimize assets
+.PHONY: optimize
 
 setup: ## 🛠️  Setup the project environment
 	$(call remove_wrong_installation)
@@ -28,27 +38,7 @@ setup: ## 🛠️  Setup the project environment
 	$(call update_pnpm)
 	$(call install_dependencies)
 	$(call setup_githooks)
-
-help: ## 🧾 Print this message
-	@printf "\n\t📜 $(ANSI_BOLD)Available targets:$(ANSI_RESET)\n\n"
-	@grep -E '^[a-zA-Z0-9_-]+:.*?## ' $(MAKEFILE_LIST) \
-	| awk -F ':|##' '\
-	BEGIN { \
-		ANSI_BOLD_CYAN = "$(ANSI_BOLD_CYAN)"; \
-		ANSI_RESET = "$(ANSI_RESET)"; \
-	} \
-	{ \
-		targets[NR]=$$1; descs[NR]=$$3; \
-		if (length($$1) > max) max = length($$1); \
-	} \
-	END { \
-		for (i = 1; i <= NR; i++) { \
-			printf "\t%s%" max "s%s —%s\n", ANSI_BOLD_CYAN, targets[i], ANSI_RESET, descs[i]; \
-		} \
-		printf "\n" \
-	}'
-
-.PHONY: prepare start build preview lint help clean optimize
+.PHONY: setup
 
 ANSI_RESET := \033[0m
 ANSI_BOLD := \033[1m
@@ -73,4 +63,24 @@ endef
 
 define setup_githooks
 	@git config --local core.hooksPath .githooks
+endef
+
+define print_help
+	@printf "\n\t📜 $(ANSI_BOLD)Available targets:$(ANSI_RESET)\n\n"
+	@grep -E '^[a-zA-Z0-9_-]+:.*?## ' $(MAKEFILE_LIST) \
+	| awk -F ':|##' '\
+	BEGIN { \
+		ANSI_BOLD_CYAN = "$(ANSI_BOLD_CYAN)"; \
+		ANSI_RESET = "$(ANSI_RESET)"; \
+	} \
+	{ \
+		targets[NR]=$$1; descs[NR]=$$3; \
+		if (length($$1) > max) max = length($$1); \
+	} \
+	END { \
+		for (i = 1; i <= NR; i++) { \
+			printf "\t%s%" max "s%s —%s\n", ANSI_BOLD_CYAN, targets[i], ANSI_RESET, descs[i]; \
+		} \
+		printf "\n" \
+	}'
 endef
