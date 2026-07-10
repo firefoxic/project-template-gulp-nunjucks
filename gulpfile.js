@@ -1,32 +1,29 @@
-import { readFile, rm } from "node:fs/promises"
+import { copyFile, cp, glob, mkdir, readFile, rm, writeFile } from "node:fs/promises"
+import { basename, dirname, extname, join, relative } from "node:path"
 import { env } from "node:process"
 
 import { getProjectRoot } from "@firefoxic/utils"
 import server from "browser-sync"
 import browserslistToEsbuild from "browserslist-to-esbuild"
-import { dest, parallel, series, src, watch } from "gulp"
-import { createGulpEsbuild } from "gulp-esbuild"
-import { nunjucksCompile } from "gulp-nunjucks"
-import plumber from "gulp-plumber"
-import postcss from "gulp-postcss"
+import { parallel, series, watch } from "gulp"
 import { minify } from "html-minifier-terser"
-import through2 from "through2"
+import nunjucks from "nunjucks"
+import postcss from "postcss"
+import postcssLoadConfig from "postcss-load-config"
+import { rolldown } from "rolldown"
 
 const IS_DEVELOPMENT = env.NODE_ENV !== `production`
 const FONT_GLOB = `**/*.woff2`
 const SRC = `./src`
 const DIST = `./dist`
 const STATIC = `./public`
+const PAGES = `${SRC}/pages`
 const SHARED = `${SRC}/shared`
 const SHARED_PATTERNS = [`${SHARED}/fonts/${FONT_GLOB}`]
-
-let plumberOptions = {
-	errorHandler (error) {
-		// oxlint-disable-next-line no-console
-		console.error(error.message)
-		this.emit(`end`)
-	},
-}
+const NUNJUCKS_ENV = nunjucks.configure(SRC, {
+	autoescape: true,
+	noCache: IS_DEVELOPMENT,
+})
 
 export default series(
 	removeDist,
@@ -44,7 +41,7 @@ export async function startServer () {
 
 	let serveStatic = SHARED_PATTERNS
 		.map((pattern) => {
-			let path = pattern.replace(/(\/\*\*\/.*$)|\/$/, ``)
+			let path = pattern.replace(/(\/\*\*\/.*$)|\/$/u, ``)
 			let route = path.replace(SRC, ``)
 			let dir = [path]
 
@@ -76,79 +73,127 @@ export async function startServer () {
 }
 
 export async function processMarkup () {
-	let { default: data } = await import(`${SHARED}/data.json`, { "with": { type: `json` } })
+	let data = JSON.parse(await readFile(`${SHARED}/data.json`, `utf8`))
 
 	data.project.root = getProjectRoot()
 
-	return src(`${SRC}/pages/**/*.{html,njk}`, { base: SRC })
-		.pipe(plumber(plumberOptions))
-		.pipe(nunjucksCompile(data))
-		.pipe(through2.obj(async (file, enc, cb) => {
-			let minified = await minify(file.contents.toString(), {
-				collapseWhitespace: !IS_DEVELOPMENT,
-				conservativeCollapse: !IS_DEVELOPMENT,
-				decodeEntities: !IS_DEVELOPMENT,
-				removeComments: !IS_DEVELOPMENT,
-			})
+	let pagePaths = await Array.fromAsync(glob(`${PAGES}/**/*.{html,njk}`))
 
-			file.contents = Buffer.from(minified)
-			cb(null, file)
-		}))
-		.pipe(dest((path) => {
-			path.dirname = path.dirname.replace(`pages`, ``)
+	await Promise.all(pagePaths.map((pagePath) => renderPage(pagePath, data)))
 
-			return DIST
-		}))
-		.pipe(server.stream())
+	if (IS_DEVELOPMENT) reloadServer()
 }
 
-export function processStyles () {
-	let context = { IS_DEVELOPMENT }
+async function renderPage (pagePath, data) {
+	try {
+		let rendered = NUNJUCKS_ENV.render(relative(SRC, pagePath), data)
 
-	return src(`${SRC}/styles/*.css`, { sourcemaps: IS_DEVELOPMENT })
-		.pipe(plumber(plumberOptions))
-		.pipe(postcss(context))
-		.pipe(dest(`${DIST}/styles`, { sourcemaps: IS_DEVELOPMENT }))
-		.pipe(server.stream())
+		let minified = await minify(rendered, {
+			collapseWhitespace: !IS_DEVELOPMENT,
+			conservativeCollapse: !IS_DEVELOPMENT,
+			decodeEntities: !IS_DEVELOPMENT,
+			removeComments: !IS_DEVELOPMENT,
+		})
+
+		let outPath = join(DIST, relative(PAGES, pagePath)).replace(extname(pagePath), `.html`)
+
+		await mkdir(dirname(outPath), { recursive: true })
+		await writeFile(outPath, minified)
+	}
+	catch (error) {
+		console.error(error.message)
+	}
 }
 
-export function processScripts () {
-	let gulpEsbuild = createGulpEsbuild({ incremental: IS_DEVELOPMENT })
+export async function processStyles () {
+	let cssPaths = await Array.fromAsync(glob(`${SRC}/styles/*.css`))
+	let { plugins, options } = await postcssLoadConfig({ IS_DEVELOPMENT })
 
-	return src(`${SRC}/scripts/*.js`)
-		.pipe(plumber(plumberOptions))
-		.pipe(gulpEsbuild({
-			bundle: true,
-			format: `esm`,
-			// splitting: true,
+	await Promise.all(cssPaths.map((cssPath) => renderStylesheet(cssPath, plugins, options)))
+
+	if (IS_DEVELOPMENT) reloadServer(cssPaths.map((cssPath) => join(DIST, `styles`, basename(cssPath))))
+}
+
+async function renderStylesheet (cssPath, plugins, options) {
+	try {
+		let css = await readFile(cssPath, `utf8`)
+		let outPath = join(DIST, `styles`, basename(cssPath))
+
+		let result = await postcss(plugins).process(css, {
+			...options,
+			from: cssPath,
+			to: outPath,
+			map: IS_DEVELOPMENT ? { inline: false } : false,
+		})
+
+		await mkdir(dirname(outPath), { recursive: true })
+		await writeFile(outPath, result.css)
+
+		if (result.map) await writeFile(`${outPath}.map`, result.map.toString())
+	}
+	catch (error) {
+		console.error(error.message)
+	}
+}
+
+export async function processScripts () {
+	let entryPoints = await Array.fromAsync(glob(`${SRC}/scripts/*.js`))
+
+	try {
+		let bundle = await rolldown({
+			input: entryPoints,
 			platform: `browser`,
-			minify: !IS_DEVELOPMENT,
+			transform: {
+				target: browserslistToEsbuild(),
+			},
+		})
+
+		await bundle.write({
+			dir: `${DIST}/scripts`,
+			format: `esm`,
 			sourcemap: IS_DEVELOPMENT,
-			target: browserslistToEsbuild(),
-		}))
-		.pipe(dest(`${DIST}/scripts`))
-		.pipe(server.stream())
+			minify: !IS_DEVELOPMENT,
+		})
+
+		await bundle.close()
+	}
+	catch (error) {
+		console.error(error.message)
+		return
+	}
+
+	if (IS_DEVELOPMENT) reloadServer()
 }
 
-export function copyStatic () {
-	return src(`${STATIC}/**/*`, { encoding: false })
-		.pipe(dest(DIST))
+export async function copyStatic () {
+	await cp(STATIC, DIST, { recursive: true, force: true })
 }
 
 export async function copyShared () {
-	let fontDirs = await getFontDirs()
-	let pathsToFonts = fontDirs.map((path) => `${path}${FONT_GLOB}`)
+	await Promise.all(SHARED_PATTERNS.map((pattern) => copyGlob(pattern, SRC, DIST)))
 
-	src(SHARED_PATTERNS, { base: SRC, encoding: false }).pipe(dest(DIST))
-	if (pathsToFonts.length > 0) src(pathsToFonts, { encoding: false }).pipe(dest(`${DIST}/shared/fonts`))
+	let fontDirs = await getFontDirs()
+
+	await Promise.all(fontDirs.map((dir) => copyGlob(`${dir}${FONT_GLOB}`, dir, `${DIST}/shared/fonts`)))
 }
 
-function reloadServer () {
-	return server.reload()
+async function copyGlob (pattern, baseDir, outDir) {
+	let files = await Array.fromAsync(glob(pattern))
+
+	await Promise.all(files.map(async (file) => {
+		let target = join(outDir, relative(baseDir, file))
+
+		await mkdir(dirname(target), { recursive: true })
+		await copyFile(file, target)
+	}))
+}
+
+function reloadServer (path) {
+	server.reload(path)
 }
 
 async function getFontDirs () {
-	let { default: { dependencies = {} } } = await import(`./package.json`, { "with": { type: `json` } })
+	let { dependencies = {} } = JSON.parse(await readFile(`./package.json`, `utf8`))
 
 	let fontDependencies = Object.keys(dependencies)
 		.filter((dependency) => dependency.startsWith(`@fontsource`))

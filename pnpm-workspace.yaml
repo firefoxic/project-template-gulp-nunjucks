@@ -1,15 +1,8 @@
 allowBuilds:
-  esbuild: true
   sharp: true
-
-engineStrict: true
 
 gitBranchLockfile: true
 
 mergeGitBranchLockfilesBranchPattern:
   - main
   - release*
-
-shellEmulator: true
-
-verifyDepsBeforeRun: install

@@ -2,36 +2,41 @@
 	"private": true,
 	"type": "module",
 	"scripts": {
-		"help": "make help",
-		"prepare": "make setup"
+		"help": "make help"
 	},
-	"engines": {
-		"node": ">=22.18",
-		"pnpm": ">=10.30"
+	"devEngines": {
+		"runtime": {
+			"name": "node",
+			"version": ">=26.5",
+			"onFail": "download"
+		},
+		"packageManager": {
+			"name": "pnpm",
+			"version": ">=11.11",
+			"onFail": "download"
+		}
 	},
 	"dependencies": {
 		"@fontsource-variable/roboto-flex": "^5.2.8",
-		"@fontsource-variable/roboto-mono": "^5.2.8"
+		"@fontsource-variable/roboto-mono": "^5.2.9"
 	},
 	"devDependencies": {
-		"@firefoxic/optimize": "^5.1.0",
-		"@firefoxic/oxlint-config": "^0.3.0",
-		"@firefoxic/stylelint-config": "^6.0.1",
-		"@firefoxic/utils": "^2.0.0",
+		"@firefoxic/optimize": "^5.2.2",
+		"@firefoxic/oxlint-config": "^0.4.0",
+		"@firefoxic/stylelint-config": "^9.0.0",
+		"@firefoxic/utils": "^2.1.2",
 		"browser-sync": "^3.0.4",
 		"browserslist-to-esbuild": "^2.1.1",
 		"gulp": "^5.0.1",
-		"gulp-esbuild": "^0.14.1",
-		"gulp-nunjucks": "^6.1.0",
-		"gulp-plumber": "^1.2.1",
-		"gulp-postcss": "^10.0.0",
 		"html-minifier-terser": "^7.2.0",
-		"oxlint": "^1.51.0",
-		"postcss": "^8.5.8",
+		"nunjucks": "^3.2.4",
+		"oxlint": "^1.73.0",
+		"postcss": "^8.5.16",
 		"postcss-import": "^16.1.1",
-		"postcss-lightningcss": "^1.0.2",
-		"postcss-url": "^10.1.3",
-		"stylelint": "^17.4.0",
-		"through2": "^4.0.2"
+		"postcss-lightningcss": "^1.1.0",
+		"postcss-load-config": "^6.0.1",
+		"postcss-url": "^10.1.4",
+		"rolldown": "^1.1.5",
+		"stylelint": "^17.14.0"
 	}
 }

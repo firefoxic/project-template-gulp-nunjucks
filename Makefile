@@ -55,12 +55,12 @@ define install_pnpm
 endef
 
 define update_pnpm
-	@REQUIRED_PNPM=$$(jq -r '.engines.pnpm' package.json) ; \
+	@REQUIRED_PNPM=$$(jq -r '.devEngines.packageManager.version' package.json) ; \
 	pnpm dlx semver -- $$(pnpm -v) -r "$$REQUIRED_PNPM" >/dev/null 2>&1 || pnpm self-update
 endef
 
 define install_dependencies
-	@test -d node_modules || pnpm install
+	@test -d node_modules || pnpm ci
 endef
 
 define setup_githooks

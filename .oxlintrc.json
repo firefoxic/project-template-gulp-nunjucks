@@ -4,6 +4,29 @@
 		"./node_modules/@firefoxic/oxlint-config/lib/syntactic.jsonc",
 		"./node_modules/@firefoxic/oxlint-config/lib/stylistic.jsonc",
 	],
+	"rules": {
+		"no-console": [
+			"error",
+			{
+				"allow": [
+					"error",
+					"warn",
+					"info",
+					"debug",
+				]
+			}
+		],
+		"unicorn/import-style": [
+			"error",
+			{
+				"styles": {
+					"node:path": {
+						"named": true
+					}
+				}
+			}
+		],
+	},
 	"overrides": [
 		{
 			"files": [
@@ -19,6 +42,14 @@
 			],
 			"env": {
 				"node": true,
+			},
+		},
+		{
+			"files": [
+				"gulpfile.js"
+			],
+			"rules": {
+				"import/exports-last": "off",
 			},
 		},
 	],
